@@ -5,6 +5,9 @@ const Main = (() => {
                 url: pageName,
                 type: "GET",
                 dataType: "html",
+                beforeSend: function () {
+                    $('body').addClass("loading");
+                },
                 success: function (response) {
                     console.log(`Request ${pageName}`);
                     $("#display").html(response);
@@ -16,6 +19,7 @@ const Main = (() => {
 
                 complete: function (response) {
                     console.log(`The request has conpleted`);
+                    $('body').removeClass("loading");
                 }
             });
         }
