@@ -19,7 +19,9 @@ const Main = (() => {
 
                 complete: function (response) {
                     console.log(`The request has conpleted`);
-                    $('body').removeClass("loading");
+                    setTimeout(function () {
+                        $('body').removeClass("loading");
+                    }, 1200);
                 }
             });
         }
