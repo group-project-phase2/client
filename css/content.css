@@ -1,0 +1,25 @@
+.ingredient-title {
+    font-family: Helvetica,Arial,Sans-serif;
+    font-size: 1.4375rem;
+    line-height: 1.2;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: .9375rem;
+}
+
+.center {
+    text-align: center
+}
+#search-btn {
+    border-style: none;
+}
+#search-btn:hover {
+    color: blue
+}
+
+#video {
+    display: none;
+}
+#food-title {
+    font-size: 30px;
+}

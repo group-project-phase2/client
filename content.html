@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="./css/content.css">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="header-section">
+        <!--Logo-->
+        <div class="container-navbar">
+            <div class="float-left">
+                <a href="#" class="header-logo"><img src="./images/logo.png" alt=""></a>
+            </div>
+
+            <!--Menu-->
+            <div class="float-right menu">
+                <ul class="navbar-menu">
+                    <li class="active"><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="mt-5 shadow p-2">
+            <div class="center p-4">
+                <h1 id="foot-title">Beef Stew</h1>
+            </div>
+            <div class="row">
+                <div class="d-flex justify-content-center col-md-6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Cheese_crust_pizza.jpg" alt="pizza" width="100%">
+                </div>
+                <div class="col-md-6">
+                    <div class="container mt-3">
+
+                        <h3 class="ingredient-title">ingredient</h3>
+
+                        <div class="row pl-3">
+                            <div class="col">
+                                <div class="row"> 2 lb. beef chuck stew meat, cubed into 1" pieces</div>
+                                <div class="row"> 1 tbsp. extra-virgin olive oil</div>
+                                <div class="row"> 1 onion, chopped</div>
+                                <div class="row"> 2 carrots, peeled and cut into rounds</div>
+                                <div class="row"> 2 stalks celery, choppedKosher salt</div>
+                                <div class="row">Freshly ground black pepper</div>
+                            </div>
+                        </div>
+
+                        <small>Need some some similar video? <button id="search-btn" onclick="search()">Press Me</button></small>
+                        <input type="hidden" id="youtube_keyword" value="ayam goreng">
+
+                    </div>
+                </div>
+                <div class="container pt-4 center" id="video">
+                    <h3 style="text-align: center" class="pt-3">Similar Video</h3>
+                    <div id="player" style="display: none"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: 'F4e4u16VZrE',
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        var done = false;
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+                setTimeout(stopVideo, 6000);
+                done = true;
+            }
+        }
+
+        function stopVideo() {
+            player.stopVideo();
+        }
+
+        function playVideo(videoId) {
+            return player.loadVideoById(videoId)
+        }
+    </script>
+
+    <script>
+        function search() {
+            let YOUTUBE_TOKEN = '';
+            searchOnYoutube(YOUTUBE_TOKEN)
+            showVideo()
+            $('#video').show()
+        }
+
+        function searchOnYoutube(YOUTUBE_TOKEN) {
+            const query = $('#youtube_keyword').val()
+            axios({
+                    url: `https://www.googleapis.com/youtube/v3/search/?key=${ YOUTUBE_TOKEN }&part=snippet&q=${ query }`
+                })
+                .then(response => {
+                    const resultSearchID = [];
+                    const {
+                        items
+                    } = response.data;
+                    items.forEach(item => {
+                        if (item.id.kind == 'youtube#video')
+                            resultSearchID.push(item.id.videoId)
+                    })
+                    const bestResult = resultSearchID[0];
+                    // console.log("BEST RESULT ID : ", bestResult)
+                    playVideo(bestResult)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+
+        function showVideo() {
+            $('#player').show()
+        }
+    </script>
+
+</body>
+
+</html>
