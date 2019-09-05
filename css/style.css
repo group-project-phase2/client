@@ -82,14 +82,11 @@ border: 1px solid #bdbdbd;
 border-top-left-radius: 0.25rem;
 border-bottom-left-radius: 0.25rem;
 }
-.input-group.md-form.form-sm.form-2 input.red-border {
-border: 1px solid #ef9a9a;
-}
-.input-group.md-form.form-sm.form-2 input.lime-border {
-border: 1px solid #cddc39;
-}
 .input-group.md-form.form-sm.form-2 input.amber-border {
-border: 1px solid #ffca28;
+line-height: 35px;
+-webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+-moz-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
 }
 
 .center {
@@ -100,5 +97,5 @@ border: 1px solid #ffca28;
 }
 
 .middle {
-    padding-top: 130px;
+    padding-top: 40px;
 }
