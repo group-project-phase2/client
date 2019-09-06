@@ -2,7 +2,7 @@ const Main = (() => {
     return {
         callPage: (pageName) => {
             $.ajax({
-                url: pageName,
+                url: 'pages/' + pageName,
                 type: "GET",
                 dataType: "html",
                 beforeSend: function () {
