@@ -64,12 +64,9 @@
     bottom: 25%;
 }
 
-<<<<<<< HEAD
 .card {
     margin-top: 30px
-=======
-/* -------------------- */
-
+}
 .search {
     position: fixed;
     top: 50%;
@@ -102,5 +99,4 @@ box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
 
 .middle {
     padding-top: 40px;
->>>>>>> 02b1ed605f94de684d50d0dfcf482f150795ab37
 }
