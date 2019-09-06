@@ -24,6 +24,24 @@ const Main = (() => {
                     }, 1200);
                 }
             });
+        },
+
+        fetchRecipes: (keywords = 'Yogurt') => {
+            const baseUrl = 'http://localhost:3000';
+
+            $.ajax({
+                url: `${baseUrl}/foods/recipe`,
+                type: "GET",
+                beforeSend: function (request) {
+                    request.setRequestHeader("token", localStorage.getItem('token'));
+                },
+                data: {
+                    "food": keywords
+                },
+                success: function (result) {
+                    console.log(result);
+                }
+            });
         }
     };
 })();
