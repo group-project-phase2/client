@@ -1,5 +1,9 @@
 <link rel="stylesheet" type="text/css" href="css/login-style.css">
 
+<!-- Google Platform Library  -->
+<script src="https://apis.google.com/js/platform.js"></script>
+<meta name="google-signin-client_id" content="323874734298-vrlavakg3iqb6ig2qbp22c7ijisk1pd9.apps.googleusercontent.com">
+
 <div class="hb-container">
 	<div class="hb-wrap">
 		<div class="hb-form-title" style="background-image: url(images/login-bg.jpg);">
@@ -27,11 +31,48 @@
 				<div class="col text-center">
 					<button type="button" class="btn btn-primary" style="width: 40%;"
 						onclick="Main.callPage('search.html')">Login</button>
+						<br>
 				</div>
 
+				<div class="text-center p-3">
+					<small>Or, login with: </small>
+				</div>
+				<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			</form>
 		</div>
 
-
 	</div>
 </div>
+
+<script>
+	const server_url = "http://localhost:3000"
+
+	function signOut() {
+		
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function () {
+			localStorage.removeItem("token")
+			console.log('User signed out.');
+		});
+		Main.callPage('login.html');
+	}
+	function onSignIn(googleUser) {
+		let idToken = googleUser.getAuthResponse().id_token
+		// console.log(idToken)
+		axios({
+			method: "POST",
+			url: `${server_url}/users/Gsignin`,
+			data: {
+				idToken
+			}
+		})
+		.then(response => {
+			// console.log(response.data)
+			let token = response.data.token
+			localStorage.setItem('token', token)
+		})
+		.catch(err => {
+			console.log("error")
+		})
+	}
+</script>
