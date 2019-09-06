@@ -24,7 +24,12 @@
         const keywords = $('#inputSearch').val();
 
         if (keywords === '') {
-            alert('Masukan yang mau dicari')
+            Swal.fire({
+                type: 'warning',
+                title: 'Pleaase input the keywords',
+                showConfirmButton: false,
+                timer: 1500
+            })
         } else {
             const baseUrl = 'http://localhost:3000';
 

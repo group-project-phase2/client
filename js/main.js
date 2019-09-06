@@ -21,7 +21,7 @@ const Main = (() => {
                     console.log(`The request has conpleted`);
                     setTimeout(function () {
                         $('body').removeClass("loading");
-                    }, 1200);
+                    }, 200);
                 }
             });
         },
