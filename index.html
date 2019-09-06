@@ -17,7 +17,12 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="./css//content.css">
+    <link rel="stylesheet" href="./css/content.css">
+    <!-- Google Platform Library  -->
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <meta name="google-signin-client_id"
+        content="323874734298-vrlavakg3iqb6ig2qbp22c7ijisk1pd9.apps.googleusercontent.com">
+
 </head>
 
 <body>
@@ -32,7 +37,7 @@
             <!--Menu-->
             <div class="float-right menu">
                 <ul class="navbar-menu">
-                    <li class="active"><a href="#" onclick="Main.callPage('login.html')">Logout</a></li>
+                    <li class="active"><a href="#" onclick="signOut()">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -46,6 +51,8 @@
             </div>
         </div>
     </div>
+
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
 </body>
 
 </html>
@@ -57,10 +64,54 @@
 <script src="./js/login.js"></script>
 
 <script>
+    $('.g-signin2').hide()
     if (localStorage.getItem('token')) {
         Main.callPage('search.html');
     } else {
         Main.callPage('login.html');
+    }
+
+    $('#login-btn').click(function () {
+        Swal.fire(
+            'Login Success!',
+            'Welcome and Have Fun!',
+            'success'
+        )
+    })
+    const server_url = "http://localhost:3000"
+
+    function signOut() {
+
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            localStorage.removeItem("token")
+            console.log('User signed out.');
+        });
+        Main.callPage('login.html');
+    }
+
+    function onSignIn(googleUser) {
+        let idToken = googleUser.getAuthResponse().id_token
+        // console.log(idToken)
+        axios({
+            method: "POST",
+            url: `${server_url}/users/Gsignin`,
+            data: {
+                idToken
+            }
+        })
+            .then(response => {
+                // console.log(response.data)
+                let token = response.data.token
+                localStorage.setItem('token', token)
+
+                Main.callPage('search.html');
+                $('.header-section').show();
+                $('.g-signin2').hide();
+            })
+            .catch(err => {
+                console.log("error")
+            })
     }
 </script>
 </body>
