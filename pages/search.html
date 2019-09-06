@@ -50,6 +50,16 @@
 
                     localStorage.setItem('data', JSON.stringify(result));
                     Main.callPage('card.html');
+                },
+                error: function (err) {
+                    $('body').removeClass("loading");
+
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Not found',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             });
         }
