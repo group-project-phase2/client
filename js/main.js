@@ -26,11 +26,10 @@ const Main = (() => {
             });
         },
 
-        fetchRecipes: (keywords = 'Yogurt') => {
+        fetchRecipes: (keywords = '') => {
             const baseUrl = 'http://localhost:3000';
-
             $.ajax({
-                url: `${baseUrl}/foods/recipe`,
+                url: `${baseUrl}/foods/recipe/${keywords}`,
                 type: "GET",
                 beforeSend: function (request) {
                     request.setRequestHeader("token", localStorage.getItem('token'));
