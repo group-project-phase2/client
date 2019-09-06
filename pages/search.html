@@ -43,6 +43,9 @@
             alert('Masukan yang mau dicari')
         } else {
             const baseUrl = 'http://localhost:3000';
+
+            $('body').addClass("loading");
+
             $.ajax({
                 url: `${baseUrl}/foods/recipe/${keywords}`,
                 type: "GET",
@@ -54,6 +57,8 @@
                 },
                 success: function (result) {
                     console.log(result);
+                    $('body').removeClass("loading");
+
                     localStorage.setItem('data', JSON.stringify(result));
                     Main.callPage('card.html');
                 }
