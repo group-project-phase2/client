@@ -46,7 +46,7 @@
         localStorage.setItem('index', index);
         const ingr = ingredients.split(',')
         const token = localStorage.getItem('token')
-
+        Swal.showLoading()
         console.log('xx', index, ingredients);
         axios({
             url: `http://localhost:3000/foods/nutrition`,
@@ -57,20 +57,23 @@
             .then(res => {
                 const data = res.data;
                 console.log(data);
-                if (!data.sugar || !data.fat || !data.calories) {
-                    localStorage.setItem('sugar', 'None')
-                    localStorage.setItem('fat', 'None')
-                    localStorage.setItem('calories', 'None')
-                } else {
-                    localStorage.setItem('sugar', data.sugar)
-                    localStorage.setItem('fat', data.fat)
-                    localStorage.setItem('calories', data.calories)
-                }
+                localStorage.setItem('sugar', data.sugar)
+                localStorage.setItem('fat', data.fat)
+                localStorage.setItem('calories', data.calories)
 
 
+                // Main.callPage('content.html')
+            })
+            .catch(err => {
+                localStorage.setItem('sugar', 'None')
+                localStorage.setItem('fat', 'None')
+                localStorage.setItem('calories', 'None')
+                // Main.callPage('content.html')
+            })
+            .finally(() => {
+                Swal.close()
                 Main.callPage('content.html')
             })
-            .catch(err => console.log("err"))
 
     }
 </script>

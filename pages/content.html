@@ -81,18 +81,18 @@
 
     $('#viewmore-content').html('');
 
-    const index = localStorage.getItem('index');
-    const foodInformation = JSON.parse(localStorage.getItem('data')).foodsInfo[index];
-    let foodTitle = foodInformation.label;
-    let foodImageURL = foodInformation.image;
-    let ingredients = foodInformation.ingredient;
+    var index = localStorage.getItem('index');
+    var foodInformation = JSON.parse(localStorage.getItem('data')).foodsInfo[index];
+    var foodTitle = foodInformation.label;
+    var foodImageURL = foodInformation.image;
+    var ingredients = foodInformation.ingredient;
 
-    let ingredientHTML = ''
+    var ingredientHTML = ''
     for (let i = 0; i < ingredients.length; i++) {
         ingredientHTML += `<div class="row">${ingredients[i]}</div>`
     }
 
-    const viewContentHTML = `
+    var viewContentHTML = `
     <div class="mt-5 shadow p-2">
         <div class="center pt-4 pb-4">
             <h1 id="food-title">${foodTitle}</h1>

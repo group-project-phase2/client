@@ -13,7 +13,7 @@ const Main = (() => {
                     $("#display").html(response);
                 },
 
-                error: function (response) {
+                error: function (error) {
                     console.log(`The page was no loaded`, error);
                 },
 
