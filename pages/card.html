@@ -5,47 +5,49 @@
 </div>
 
 <script>
-    var foodInformations = JSON.parse(localStorage.getItem('data')).foodsInfo;
+    function getInformation() {
+        let foodInformations = JSON.parse(localStorage.getItem('data')).foodsInfo;
 
-    if (foodInformations.length == 0) {
-        $('#item').append("<h1> Food Not Found </h1>");
-    } else {
-        foodInformations.forEach((food, index) => {
-            let foodTitle = food.label;
-            let foodImageURL = food.image;
-            let ingredients = food.ingredient;
-            let card = `<div class="card" style="width: 100%">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="${foodImageURL}" class="card-img-top" alt="food" height="100%">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-utensils"></i> ${foodTitle} </h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                            card's content. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum excepturi
-                            fuga in quos quas libero rerum, omnis deleniti voluptatem! Inventore accusantium repellendus
-                            quaerat deleniti exercitationem necessitatibus, tempore pariatur suscipit.</p>
-                        <a href="#" onclick="press(${index} ,'${ingredients}')" class="card-link">View More</a>
+        if (foodInformations.length == 0) {
+            $('#item').append("<h1> Food Not Found </h1>");
+        } else {
+            foodInformations.forEach((food, index) => {
+                let foodTitle = food.label;
+                let foodImageURL = food.image;
+                let ingredients = food.ingredient;
+                let card = `<div class="card" style="width: 100%">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="${foodImageURL}" class="card-img-top" alt="food" height="100%">
                     </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-utensils"></i> ${foodTitle} </h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                                card's content. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum excepturi
+                                fuga in quos quas libero rerum, omnis deleniti voluptatem! Inventore accusantium repellendus
+                                quaerat deleniti exercitationem necessitatibus, tempore pariatur suscipit.</p>
+                            <a href="#" onclick="press(${index} ,'${ingredients}')" class="card-link">View More</a>
+                        </div>
+                        </div>
                     </div>
-                </div>
-            </div>`
+                </div>`
 
 
-            $('#item').append(card);
+                $('#item').append(card);
 
-        })
-
-
-
+            })
+        }
     }
+
+    getInformation()
 
     function press(index, ingredients) {
         localStorage.setItem('index', index);
         const ingr = ingredients.split(',')
         const token = localStorage.getItem('token')
 
+        console.log('xx', index, ingredients);
         axios({
             url: `http://localhost:3000/foods/nutrition`,
             method: "POST",
@@ -54,9 +56,16 @@
         })
             .then(res => {
                 const data = res.data;
-                localStorage.setItem('sugar', data.sugar)
-                localStorage.setItem('fat', data.fat)
-                localStorage.setItem('calories', data.calories)
+                console.log(data);
+                if (!data.sugar || !data.fat || !data.calories) {
+                    localStorage.setItem('sugar', 'None')
+                    localStorage.setItem('fat', 'None')
+                    localStorage.setItem('calories', 'None')
+                } else {
+                    localStorage.setItem('sugar', data.sugar)
+                    localStorage.setItem('fat', data.fat)
+                    localStorage.setItem('calories', data.calories)
+                }
 
 
                 Main.callPage('content.html')
@@ -64,6 +73,4 @@
             .catch(err => console.log("err"))
 
     }
-
-
 </script>

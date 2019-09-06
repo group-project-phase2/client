@@ -1,8 +1,8 @@
 <div class="container">
     <div id="viewmore-content">
-            
+
     </div>
-    
+
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
@@ -44,9 +44,7 @@
     function playVideo(videoId) {
         return player.loadVideoById(videoId)
     }
-</script>
 
-<script>
     function search() {
         let YOUTUBE_TOKEN = 'AIzaSyDmfWdM-nM_Seg3Xz-4cjUdFT8hAHwUx3g';
         searchOnYoutube(YOUTUBE_TOKEN)
@@ -80,16 +78,17 @@
     function showVideo() {
         $('#player').show()
     }
-</script>
-<script>
+
+    $('#viewmore-content').html('');
+
     const index = localStorage.getItem('index');
-    const foodInformation = JSON.parse( localStorage.getItem('data')).foodsInfo[index];
+    const foodInformation = JSON.parse(localStorage.getItem('data')).foodsInfo[index];
     let foodTitle = foodInformation.label;
     let foodImageURL = foodInformation.image;
     let ingredients = foodInformation.ingredient;
-    
+
     let ingredientHTML = ''
-    for ( let i = 0 ; i < ingredients.length ;i++ ){
+    for (let i = 0; i < ingredients.length; i++) {
         ingredientHTML += `<div class="row">${ingredients[i]}</div>`
     }
 
