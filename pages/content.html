@@ -2,15 +2,6 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="./css/content.css">
 
     <title>Document</title>
 </head>
@@ -40,7 +31,8 @@
             </div>
             <div class="row">
                 <div class="d-flex justify-content-center col-md-6">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Cheese_crust_pizza.jpg" alt="pizza" width="100%">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Cheese_crust_pizza.jpg" alt="pizza"
+                        width="100%">
                 </div>
                 <div class="col-md-6">
                     <div class="container mt-3">
@@ -58,13 +50,14 @@
                             </div>
                         </div>
 
-                        <small>Need some some similar video? <button id="search-btn" onclick="search()">Press Me</button></small>
+                        <small>Need some some similar video? <button id="search-btn" onclick="search()">Press
+                                Me</button></small>
                         <input type="hidden" id="youtube_keyword" value="ayam goreng">
 
                     </div>
                 </div>
-                <div class="container pt-4 center" id="video">
-                    <h3 style="text-align: center" class="pt-3">Similar Video</h3>
+                <div class="container center-video" id="video">
+                    <h3 class="pt-3">Similar Video</h3>
                     <div id="player" style="display: none"></div>
                 </div>
 
@@ -72,7 +65,7 @@
         </div>
 
     </div>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         var tag = document.createElement('script');
 
@@ -84,8 +77,6 @@
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '390',
-                width: '640',
                 videoId: 'F4e4u16VZrE',
                 events: {
                     'onReady': onPlayerReady,
@@ -127,8 +118,8 @@
         function searchOnYoutube(YOUTUBE_TOKEN) {
             const query = $('#youtube_keyword').val()
             axios({
-                    url: `https://www.googleapis.com/youtube/v3/search/?key=${ YOUTUBE_TOKEN }&part=snippet&q=${ query }`
-                })
+                url: `https://www.googleapis.com/youtube/v3/search/?key=${YOUTUBE_TOKEN}&part=snippet&q=${query}`
+            })
                 .then(response => {
                     const resultSearchID = [];
                     const {
