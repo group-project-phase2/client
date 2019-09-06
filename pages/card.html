@@ -5,8 +5,7 @@
 </div>
 
 <script>
-    let foodInformations = JSON.parse( localStorage.getItem('data')).foodsInfo;
-   
+    var foodInformations = JSON.parse(localStorage.getItem('data')).foodsInfo;
 
     if (foodInformations.length == 0) {
         $('#item').append("<h1> Food Not Found </h1>");
@@ -27,7 +26,7 @@
                             card's content. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum excepturi
                             fuga in quos quas libero rerum, omnis deleniti voluptatem! Inventore accusantium repellendus
                             quaerat deleniti exercitationem necessitatibus, tempore pariatur suscipit.</p>
-                        <a href="#" onclick="press(${index } ,'${ingredients}')" class="card-link">View More</a>
+                        <a href="#" onclick="press(${index} ,'${ingredients}')" class="card-link">View More</a>
                     </div>
                     </div>
                 </div>
@@ -42,27 +41,27 @@
 
     }
 
-    function press( index , ingredients ) {
-        localStorage.setItem('index', index );
+    function press(index, ingredients) {
+        localStorage.setItem('index', index);
         const ingr = ingredients.split(',')
         const token = localStorage.getItem('token')
 
         axios({
-            url :`http://localhost:3000/foods/nutrition`,
-            method : "POST",
-            headers : {token},
-            data : { ingr }
+            url: `http://localhost:3000/foods/nutrition`,
+            method: "POST",
+            headers: { token },
+            data: { ingr }
         })
-        .then ( res => {
-            const data = res.data;
-            localStorage.setItem('sugar' , data.sugar )
-            localStorage.setItem('fat' , data.fat )
-            localStorage.setItem('calories' , data.calories )
-            
+            .then(res => {
+                const data = res.data;
+                localStorage.setItem('sugar', data.sugar)
+                localStorage.setItem('fat', data.fat)
+                localStorage.setItem('calories', data.calories)
 
-            Main.callPage('content.html')
-        })
-        .catch( err => console.log( "err" ))
+
+                Main.callPage('content.html')
+            })
+            .catch(err => console.log("err"))
 
     }
 
