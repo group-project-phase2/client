@@ -25,15 +25,9 @@
 
 				<div class="col text-center">
 					<button type="button" class="btn btn-primary" style="width: 40%;"
-						onclick="Main.callPage('search.html')">Login</button>
+						onclick="Main.callPage('search.html')" class="login-sendiri">Login</button>
 					<br>
 				</div>
-
-				<div class="text-center p-3">
-					<small>Or, login with: </small>
-				</div>
-				<div class="g-signin2" data-onsuccess="onSignIn"></div>
-				<a href="#" onclick="signOut()">logout</a>
 			</form>
 		</div>
 
@@ -42,5 +36,5 @@
 
 <script>
 	$('.header-section').hide();
-	$('.g-signin2').show()
+	$('.g-signin2').show();
 </script>
