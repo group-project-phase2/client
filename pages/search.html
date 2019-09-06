@@ -1,3 +1,7 @@
+<!-- Google Platform Library  -->
+<script src="https://apis.google.com/js/platform.js"></script>
+<meta name="google-signin-client_id" content="323874734298-vrlavakg3iqb6ig2qbp22c7ijisk1pd9.apps.googleusercontent.com">
+
 <header class="header-section">
     <!--Logo-->
     <div class="container-navbar">
@@ -8,7 +12,7 @@
         <!--Menu-->
         <div class="float-right menu">
             <ul class="navbar-menu">
-                <li class="active"><a href="#">Logout</a></li>
+                <li class="active"><a href="#" onclick="signOut()">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -33,3 +37,15 @@
     </div>
 
 </div>
+
+<script>
+    function signOut() {
+        Main.callPage('login.html');
+            
+        // var auth2 = gapi.auth2.getAuthInstance();
+        // auth2.signOut().then(function () {
+        //     localStorage.removeItem("token")
+        //     console.log('User signed out.');
+        // });
+    }
+</script>
