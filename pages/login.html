@@ -56,8 +56,12 @@
 				$('.g-signin2').hide();
 			})
 			.catch(err => {
-				console.log(err.message)
-
+				Swal.fire({
+					type: 'error',
+					title: 'Email or password doesn\'t match with any account',
+					showConfirmButton: false,
+					timer: 1500
+				})
 			})
 	}
 </script>
