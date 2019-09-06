@@ -24,46 +24,48 @@
     </header>
 
     <div class="container">
-
-        <div class="mt-5 shadow p-2">
-            <div class="center p-4">
-                <h1 id="food-title">Beef Stew</h1>
-            </div>
-            <div class="row">
-                <div class="d-flex justify-content-center col-md-6">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Cheese_crust_pizza.jpg" alt="pizza"
-                        width="100%">
-                </div>
-                <div class="col-md-6">
-                    <div class="container mt-3">
-
-                        <h3 class="ingredient-title">ingredient</h3>
-
-                        <div class="row pl-3">
-                            <div class="col">
-                                <div class="row"> 2 lb. beef chuck stew meat, cubed into 1" pieces</div>
-                                <div class="row"> 1 tbsp. extra-virgin olive oil</div>
-                                <div class="row"> 1 onion, chopped</div>
-                                <div class="row"> 2 carrots, peeled and cut into rounds</div>
-                                <div class="row"> 2 stalks celery, choppedKosher salt</div>
-                                <div class="row">Freshly ground black pepper</div>
-                            </div>
+        <div class="viewmore-content">
+                <div class="mt-5 shadow p-2">
+                        <div class="center p-4">
+                            <h1 id="food-title">Beef Stew</h1>
                         </div>
-
-                        <small>Need some some similar video? <button id="search-btn" onclick="search()">Press
-                                Me</button></small>
-                        <input type="hidden" id="youtube_keyword" value="ayam goreng">
-
+                        <div class="row">
+                            <div class="d-flex justify-content-center col-md-6">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Cheese_crust_pizza.jpg" alt="pizza"
+                                    width="100%">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="container mt-3">
+            
+                                    <h3 class="ingredient-title">ingredient</h3>
+            
+                                    <div class="row pl-3">
+                                        <div class="col">
+                                            <div class="row"> 2 lb. beef chuck stew meat, cubed into 1" pieces</div>
+                                            <div class="row"> 1 tbsp. extra-virgin olive oil</div>
+                                            <div class="row"> 1 onion, chopped</div>
+                                            <div class="row"> 2 carrots, peeled and cut into rounds</div>
+                                            <div class="row"> 2 stalks celery, choppedKosher salt</div>
+                                            <div class="row">Freshly ground black pepper</div>
+                                        </div>
+                                    </div>
+            
+                                    <small>Need some some similar video? <button id="search-btn" onclick="search()">Press
+                                            Me</button></small>
+                                    <input type="hidden" id="youtube_keyword" value="ayam goreng">
+            
+                                </div>
+                            </div>
+                            <div class="container center-video" id="video">
+                                <h3 class="pt-3">Similar Video</h3>
+                                <div id="player" style="display: none"></div>
+                            </div>
+            
+                        </div>
                     </div>
-                </div>
-                <div class="container center-video" id="video">
-                    <h3 class="pt-3">Similar Video</h3>
-                    <div id="player" style="display: none"></div>
-                </div>
-
-            </div>
+            
         </div>
-
+        
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
@@ -142,7 +144,9 @@
             $('#player').show()
         }
     </script>
-
+    <script>
+        console.log( localStorage.getItem('index') )
+    </script>
 </body>
 
 </html>
