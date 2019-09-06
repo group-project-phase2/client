@@ -1,170 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <title>Document</title>
-</head>
-
-<body>
-    <header class="header-section">
-        <!--Logo-->
-        <div class="container-navbar">
-            <div class="float-left">
-                <a href="#" class="header-logo"><img src="./images/logo.png" alt=""></a>
-            </div>
-
-            <!--Menu-->
-            <div class="float-right menu">
-                <ul class="navbar-menu">
-                    <li class="active"><a href="#">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <div id="viewmore-content">
-                
-        </div>
-        
+<div class="container">
+    <div id="viewmore-content">
+            
     </div>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        var tag = document.createElement('script');
+    
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var tag = document.createElement('script');
 
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        var player;
+    var player;
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                videoId: 'XfpIfQCsWDI',
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            event.target.playVideo();
-        }
-
-        var done = false;
-
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING && !done) {
-                setTimeout(stopVideo, 6000);
-                done = true;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            videoId: 'XfpIfQCsWDI',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
             }
-        }
+        });
+    }
 
-        function stopVideo() {
-            player.stopVideo();
-        }
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
 
-        function playVideo(videoId) {
-            return player.loadVideoById(videoId)
-        }
-    </script>
+    var done = false;
 
-    <script>
-        function search() {
-            let YOUTUBE_TOKEN = 'AIzaSyDmfWdM-nM_Seg3Xz-4cjUdFT8hAHwUx3g';
-            searchOnYoutube(YOUTUBE_TOKEN)
-            showVideo()
-            $('#video').show()
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 6000);
+            done = true;
         }
+    }
 
-        function searchOnYoutube(YOUTUBE_TOKEN) {
-            const query = $('#youtube_keyword').val()
-            axios({
-                url: `https://www.googleapis.com/youtube/v3/search/?key=${YOUTUBE_TOKEN}&part=snippet&q='how to cook ${query}'`
+    function stopVideo() {
+        player.stopVideo();
+    }
+
+    function playVideo(videoId) {
+        return player.loadVideoById(videoId)
+    }
+</script>
+
+<script>
+    function search() {
+        let YOUTUBE_TOKEN = 'AIzaSyDmfWdM-nM_Seg3Xz-4cjUdFT8hAHwUx3g';
+        searchOnYoutube(YOUTUBE_TOKEN)
+        showVideo()
+        $('#video').show()
+    }
+
+    function searchOnYoutube(YOUTUBE_TOKEN) {
+        const query = $('#youtube_keyword').val()
+        axios({
+            url: `https://www.googleapis.com/youtube/v3/search/?key=${YOUTUBE_TOKEN}&part=snippet&q='how to cook ${query}'`
+        })
+            .then(response => {
+                const resultSearchID = [];
+                const {
+                    items
+                } = response.data;
+                items.forEach(item => {
+                    if (item.id.kind == 'youtube#video')
+                        resultSearchID.push(item.id.videoId)
+                })
+                const bestResult = resultSearchID[0];
+                // console.log("BEST RESULT ID : ", bestResult)
+                playVideo(bestResult)
             })
-                .then(response => {
-                    const resultSearchID = [];
-                    const {
-                        items
-                    } = response.data;
-                    items.forEach(item => {
-                        if (item.id.kind == 'youtube#video')
-                            resultSearchID.push(item.id.videoId)
-                    })
-                    const bestResult = resultSearchID[0];
-                    // console.log("BEST RESULT ID : ", bestResult)
-                    playVideo(bestResult)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
-        function showVideo() {
-            $('#player').show()
-        }
-    </script>
-    <script>
-        const index = localStorage.getItem('index');
-        const foodInformation = JSON.parse( localStorage.getItem('data')).foodsInfo[index];
-        let foodTitle = foodInformation.label;
-        let foodImageURL = foodInformation.image;
-        let ingredients = foodInformation.ingredient;
-        
-        let ingredientHTML = ''
-        for ( let i = 0 ; i < ingredients.length ;i++ ){
-            ingredientHTML += `<div class="row">${ingredients[i]}</div>`
-        }
+    function showVideo() {
+        $('#player').show()
+    }
+</script>
+<script>
+    const index = localStorage.getItem('index');
+    const foodInformation = JSON.parse( localStorage.getItem('data')).foodsInfo[index];
+    let foodTitle = foodInformation.label;
+    let foodImageURL = foodInformation.image;
+    let ingredients = foodInformation.ingredient;
+    
+    let ingredientHTML = ''
+    for ( let i = 0 ; i < ingredients.length ;i++ ){
+        ingredientHTML += `<div class="row">${ingredients[i]}</div>`
+    }
 
-        const viewContentHTML = `
-        <div class="mt-5 shadow p-2">
-            <div class="center pt-4 pb-4">
-                <h1 id="food-title">${foodTitle}</h1>
+    const viewContentHTML = `
+    <div class="mt-5 shadow p-2">
+        <div class="center pt-4 pb-4">
+            <h1 id="food-title">${foodTitle}</h1>
+        </div>
+        <div class="row">
+            <div class="d-flex justify-content-center col-md-6">
+                <img src="${foodImageURL}" alt="pizza"
+                    width="100%">
             </div>
-            <div class="row">
-                <div class="d-flex justify-content-center col-md-6">
-                    <img src="${foodImageURL}" alt="pizza"
-                        width="100%">
-                </div>
-                <div class="col-md-6">
-                    <div class="container mt-3">
+            <div class="col-md-6">
+                <div class="container mt-3">
 
-                        <h3 class="ingredient-title">ingredient</h3>
+                    <h3 class="ingredient-title">ingredient</h3>
 
-                        <div class="row pl-3">
-                            <div class="col">
-                                ${ingredientHTML}
-                            </div>
+                    <div class="row pl-3">
+                        <div class="col">
+                            ${ingredientHTML}
                         </div>
-                        <br>
-                        <br>
-                        <h3>Nutritions</h3>
-                        <div class="row pl-3">
-                            <div class="col">
-                                
-                                <div class="row">Calories : ${localStorage.getItem('calories')}</div>
-                                <div class="row">Sugar : ${localStorage.getItem('sugar')}</div>
-                                <div class="row">Fat : ${localStorage.getItem('fat')}</div>
-                            </div>
-                        </div>
-                        <small>Need some some similar video? <button id="search-btn" onclick="search()">Press
-                                Me</button></small>
-                        <input type="hidden" id="youtube_keyword" value="${foodTitle}">
-
                     </div>
-                </div>
-                <div class="container center-video" id="video">
-                    <h3 class="pt-3">Similar Video</h3>
-                    <div id="player" style="display: none"></div>
-                </div>
+                    <br>
+                    <br>
+                    <h3>Nutritions</h3>
+                    <div class="row pl-3">
+                        <div class="col">
+                            
+                            <div class="row">Calories : ${localStorage.getItem('calories')}</div>
+                            <div class="row">Sugar : ${localStorage.getItem('sugar')}</div>
+                            <div class="row">Fat : ${localStorage.getItem('fat')}</div>
+                        </div>
+                    </div>
+                    <small>Need some some similar video? <button id="search-btn" onclick="search()">Press
+                            Me</button></small>
+                    <input type="hidden" id="youtube_keyword" value="${foodTitle}">
 
+                </div>
             </div>
-        </div>`
+            <div class="container center-video" id="video">
+                <h3 class="pt-3">Similar Video</h3>
+                <div id="player" style="display: none"></div>
+            </div>
 
-        $('#viewmore-content').append(viewContentHTML)
-    </script>
-</body>
+        </div>
+    </div>`
 
-</html>
+    $('#viewmore-content').append(viewContentHTML)
+</script>

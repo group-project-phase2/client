@@ -1,18 +1,3 @@
-<header class="header-section">
-    <!--Logo-->
-    <div class="container-navbar">
-        <div class="float-left">
-            <a href="#" class="header-logo"><img src="./images/logo.png" alt=""></a>
-        </div>
-
-        <!--Menu-->
-        <div class="float-right menu">
-            <ul class="navbar-menu">
-                <li class="active"><a href="#">Logout</a></li>
-            </ul>
-        </div>
-    </div>
-</header>
 <div class="container">
     <!-- <button onclick="Main.callPage('content.html')">View More</button> -->
     <div id="item"></div>
@@ -20,12 +5,13 @@
 </div>
 
 <script>
-    const foodInformations = JSON.parse( localStorage.getItem('data')).foodsInfo;
-    
-    if ( foodInformations.length == 0 ) {
-        $('#item').append( "<h1> Food Not Found </h1>" );
+    let foodInformations = JSON.parse( localStorage.getItem('data')).foodsInfo;
+   
+
+    if (foodInformations.length == 0) {
+        $('#item').append("<h1> Food Not Found </h1>");
     } else {
-        foodInformations.forEach( (food, index) => {
+        foodInformations.forEach((food, index) => {
             let foodTitle = food.label;
             let foodImageURL = food.image;
             let ingredients = food.ingredient;
@@ -48,11 +34,11 @@
             </div>`
 
 
-            $('#item').append( card );
-           
+            $('#item').append(card);
+
         })
 
-        
+
 
     }
 
@@ -78,8 +64,7 @@
         })
         .catch( err => console.log( "err" ))
 
-        
-
     }
+
 
 </script>
