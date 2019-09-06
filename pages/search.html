@@ -8,7 +8,7 @@
         <!--Menu-->
         <div class="float-right menu">
             <ul class="navbar-menu">
-                <li class="active"><a href="#">Logout</a></li>
+                <li class="active"><a href="#" onclick="Main.callPage('login.html')">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -42,7 +42,22 @@
         if (keywords === '') {
             alert('Masukan yang mau dicari')
         } else {
-            Main.fetchRecipes($('#inputSearch').val());
+            const baseUrl = 'http://localhost:3000';
+            $.ajax({
+                url: `${baseUrl}/foods/recipe/${keywords}`,
+                type: "GET",
+                beforeSend: function (request) {
+                    request.setRequestHeader("token", localStorage.getItem('token'));
+                },
+                data: {
+                    "food": keywords
+                },
+                success: function (result) {
+                    console.log(result);
+                    localStorage.setItem('data', JSON.stringify(result));
+                    Main.callPage('card.html');
+                }
+            });
         }
     }); 
 </script>
